@@ -16,8 +16,8 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
 1. **Create a New .NET Web API Project**
 
     ```bash
-    dotnet new webapi -n MyWebApp
-    cd MyWebApp
+    dotnet new webapi -n wellnessapi
+    cd wellnessapi
     ```
 
 2. **Install Necessary Packages**
@@ -38,7 +38,7 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     ```json
     {
       "ConnectionStrings": {
-        "DefaultConnection": "Host=localhost;Database=mywebapp_db;Username=postgres;Password=yourpassword"
+        "DefaultConnection": "Host=localhost;Database=wellnessapi_db;Username=postgres;Password=yourpassword"
       }
     }
     ```
@@ -66,7 +66,7 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     ```csharp
     // Data/ApplicationDbContext.cs
     using Microsoft.EntityFrameworkCore;
-    using MyWebApp.Models;
+    using wellnessapi.Models;
 
     public class ApplicationDbContext : DbContext {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -80,7 +80,7 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
 
     ```csharp
     using Microsoft.EntityFrameworkCore;
-    using MyWebApp.Data;
+    using wellnessapi.Data;
 
     var builder = WebApplication.CreateBuilder(args);
     // Add services to the container.
@@ -107,9 +107,9 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
 1. **Create Test Project**
 
     ```bash
-    dotnet new xunit -n MyWebApp.Tests
-    cd MyWebApp.Tests
-    dotnet add reference ../MyWebApp/MyWebApp.csproj
+    dotnet new xunit -n wellnessapi.Tests
+    cd wellnessapi.Tests
+    dotnet add reference ../wellnessapi/wellnessapi.csproj
     ```
 
 2. **Write Tests**
@@ -120,9 +120,9 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     // Controllers/LoginControllerTests.cs
     using Xunit;
     using Moq;
-    using MyWebApp.Controllers;
-    using MyWebApp.Models;
-    using MyWebApp.Data;
+    using wellnessapi.Controllers;
+    using wellnessapi.Models;
+    using wellnessapi.Data;
     using Microsoft.EntityFrameworkCore;
 
     public class LoginControllerTests {
@@ -159,8 +159,8 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     ```csharp
     // Controllers/LoginController.cs
     using Microsoft.AspNetCore.Mvc;
-    using MyWebApp.Data;
-    using MyWebApp.Models;
+    using wellnessapi.Data;
+    using wellnessapi.Models;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -186,8 +186,8 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     ```csharp
     // Controllers/RegisterController.cs
     using Microsoft.AspNetCore.Mvc;
-    using MyWebApp.Data;
-    using MyWebApp.Models;
+    using wellnessapi.Data;
+    using wellnessapi.Models;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -215,8 +215,8 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     ```csharp
     // Controllers/ProfileController.cs
     using Microsoft.AspNetCore.Mvc;
-    using MyWebApp.Data;
-    using MyWebApp.Models;
+    using wellnessapi.Data;
+    using wellnessapi.Models;
 
     [ApiController]
     [Route("api/[controller]")]
