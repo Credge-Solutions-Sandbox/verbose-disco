@@ -49,6 +49,7 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
 
     ```csharp
     // Models/User.cs
+    namespace wellnessapi.Models{
     public class User {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -56,6 +57,7 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+    }
     }
     ```
 
@@ -79,27 +81,29 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     Register the context in `Program.cs`:
 
     ```csharp
-    var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-    var app = builder.Build();
-    
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
-    
-    app.UseHttpsRedirection();
-    app.UseAuthorization();
-    app.MapControllers();
-    app.Run();
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                                        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+app.Run();
 
 
     ```
@@ -112,8 +116,10 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
 1. **Create Test Project**
 
     ```bash
+    cd ..
     dotnet new xunit -n wellnessapi.Tests
     cd wellnessapi.Tests
+    dotnet add package xunit
     dotnet add reference ../wellnessapi/wellnessapi.csproj
     ```
 
