@@ -79,24 +79,29 @@ This tutorial guides you through Test-Driven Development (TDD) for a .NET 8 web 
     Register the context in `Program.cs`:
 
     ```csharp
-    using Microsoft.EntityFrameworkCore;
-    using wellnessapi.Data;
-
     var builder = WebApplication.CreateBuilder(args);
+
     // Add services to the container.
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-    builder.Services.AddControllers();
     var app = builder.Build();
+    
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment()
+    if (app.Environment.IsDevelopment())
     {
-    app.UseDeveloperExceptionPage();
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
+    
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();
     app.Run();
+
+
     ```
 
 
